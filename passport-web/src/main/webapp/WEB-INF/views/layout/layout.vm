@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> </title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--START-GLOBAL-CSS-->
+    #parse('/layout/css.vm')
+    #parse($!p_css)
+    <!--END-GLOBAL-CSS-->
+</head>
+<body>
+
+<!--START-GLOBAL-TOP-->
+    #parse('/layout/top.vm')
+<!--END-GLOBAL-TOP-->
+
+<!--START-GLOBAL-MENU-->
+    #parse('/layout/menu.vm')
+<!--END-GLOBAL-MENU-->
+
+<!--START-GLOBAL-CONTENT-->
+    <div id="content">
+        $screen_content
+    </div>
+<!--END-GLOBAL-CONTENT-->
+
+<!--START-GLOBAL-FOOTER-->
+    #parse('/layout/footer.vm')
+<!--END-GLOBAL-FOOTER-->
+
+<!--START-GLOBAL-JS-->
+    #parse('/layout/js.vm')
+    #parse($!p_js)
+<!--END-GLOBAL-JS-->
+</body>
+</html>

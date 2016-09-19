@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>passport</artifactId>
+        <groupId>com.likou</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>passport-service</artifactId>
+    <version>${module.version}</version>
+    <packaging>jar</packaging>
+    <description>api的实现类</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.likou</groupId>
+            <artifactId>passport-piping</artifactId>
+            <version>${module.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.likou</groupId>
+            <artifactId>passport-provider</artifactId>
+            <version>${module.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.likou</groupId>
+                    <artifactId>archetype-prv</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.likou</groupId>
+            <artifactId>passport-cache</artifactId>
+            <version>${module.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.likou</groupId>
+            <artifactId>passport-domain</artifactId>
+            <version>${module.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.likou</groupId>
+                    <artifactId>archetype-pojo</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.likou</groupId>
+                    <artifactId>archetype-dao</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+</project>

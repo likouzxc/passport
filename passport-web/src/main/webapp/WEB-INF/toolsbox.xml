@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toolbox>
+    <tool>
+        <key>global</key>
+        <class>com.likou.core.web.Contents</class>
+    </tool>
+    <tool>
+        <key>NumberTool</key>
+        <scope>application</scope>
+        <class>org.apache.velocity.tools.generic.NumberTool</class>
+    </tool>
+</toolbox>

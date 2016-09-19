@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	   >
+
+	<context:component-scan base-package="com.likou.passport.service"/>
+
+	<util:list id="zookeeperList" list-class="java.util.ArrayList">
+		<value type="java.lang.String" >${zookeeper.server.0}</value>
+		<value type="java.lang.String" >${zookeeper.server.1}</value>
+		<value type="java.lang.String" >${zookeeper.server.2}</value>
+	</util:list>
+	<util:list id="providerList" list-class="java.util.ArrayList">
+		<value type="java.lang.String" >com.likou.passport.service.expose.UserExpose</value>
+	</util:list>
+	<util:map id="serviceMap" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
+		<entry key="com.likou.core.dubbo.UserProvider" value="1.0"/>
+	</util:map>
+
+	<bean id="providerFactory" class="com.likou.core.dubbo.DubboProviderFactory" init-method="init">
+		<constructor-arg index="0" type="java.lang.String" value="${dubbo.application.name}"/>
+		<constructor-arg index="1" type="java.util.ArrayList" ref="zookeeperList"/>
+		<constructor-arg index="2" type="java.lang.Integer" value="${zookeeper.server.num}"/>
+		<constructor-arg index="3" type="java.util.ArrayList" ref="providerList"/>
+		<constructor-arg index="4" type="java.lang.String" value="${dubbo.path}"/>
+		<constructor-arg index="5" type="java.lang.String" value="${dubbo.version}"/>
+		<constructor-arg index="6" type="java.lang.String" value="${dubbo.providerHost}"/>
+		<constructor-arg index="7" type="java.lang.Integer" value="${dubbo.protocolThreadSize}"/>
+	</bean>
+	<bean id="serviceFactory" class="com.likou.core.dubbo.DubboServiceFactory">
+		<constructor-arg index="0" type="java.lang.String" value="${dubbo.application.name}"/>
+		<constructor-arg index="1" type="java.util.ArrayList" ref="zookeeperList"/>
+		<constructor-arg index="2" type="java.lang.Integer" value="${zookeeper.server.num}"/>
+		<constructor-arg index="3" type="java.util.HashMap" ref="serviceMap"/>
+	</bean>
+</beans>

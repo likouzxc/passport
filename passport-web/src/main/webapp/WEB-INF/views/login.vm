@@ -1,0 +1,82 @@
+#set($layout="/layout/noLayout.vm")
+<!DOCTYPE html>
+<html class="bootstrap-admin-vertical-centered">
+<head>
+    <title>Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" media="screen" href="http://${global.resourceHost}/css/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="http://${global.resourceHost}/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" media="screen" href="http://${global.resourceHost}/css/bootstrap-admin-theme.css">
+    <style type="text/css">
+        .alert{
+            margin: 0 auto 20px;
+        }
+    </style>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="http://${global.resourceHost}/js/html5shiv.js"></script>
+    <script type="text/javascript" src="http://${global.resourceHost}/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="bootstrap-admin-without-padding" style="background-image: url('http://${global.resourceHost}/images/bg.jpg');background-size: cover;">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            #if(${errorMsg})
+                <div class="alert alert-danger">
+                    <a class="close" data-dismiss="alert" href="#">&times;</a>
+                    <strong>ERROR!</strong>
+                    ${errorMsg}
+                </div>
+            #end
+            <form method="post" action="http://${global.host}/login.html" class="bootstrap-admin-login-form form-horizontal" style="background-color: rgba(0,0,0,.075);">
+                <h1 style="color: #ffda00;">Login</h1>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="userName" style="color:#ffffff;">登录名:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" id="userName" name="userName" value="$!{userName}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="password" style="color:#ffffff">密码:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="password" id="password" name="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="captcha" style="color:#ffffff">验证码:</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" id="captcha" name="captcha">
+                    </div>
+                    <div class="col-lg-4">
+                        <a href="javascript:reImg()"><img width="90"  height="36" id="code" src="http://${global.host}/captcha/loginPNG.html"/></a>
+                    </div>
+                </div>
+                <button class="btn btn-lg btn-primary" type="submit" style="margin: 0px 4%;width: 295px;">登录</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="http://${global.resourceHost}/js/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="http://${global.resourceHost}/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('input[name="userName"]').focus();
+        var alert = $('.alert');
+        var formWidth = $('.bootstrap-admin-login-form').innerWidth();
+        var alertPadding = parseInt($('.alert').css('padding'));
+
+        if (isNaN(alertPadding)) {
+            alertPadding = parseInt($(alert).css('padding-left'));
+        }
+
+        $('.alert').width(formWidth - 2 * alertPadding);
+    });
+    function reImg(){
+        $("img").attr("src","http://${global.host}/captcha/loginPNG.html?t="+new Date().getTime());
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd
+           ">
+
+    <bean id="slaveDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${c3p0.slave.driverClass}"></property>
+        <property name="jdbcUrl" value="${c3p0.slave.url}"></property>
+        <property name="user" value="${c3p0.slave.user}"></property>
+        <property name="password" value="${c3p0.slave.password}"></property>
+        <property name="acquireIncrement" value="${c3p0.slave.acquireIncrement}"></property>
+        <property name="initialPoolSize" value="${c3p0.slave.initialPoolSize}"></property>
+        <property name="maxIdleTime" value="${c3p0.slave.maxIdleTime}"></property>
+        <property name="maxPoolSize" value="${c3p0.slave.maxPoolSize}"></property>
+        <property name="minPoolSize" value="${c3p0.slave.minPoolSize}"></property>
+        <property name="acquireRetryDelay" value="1000"></property>
+        <property name="acquireRetryAttempts" value="60"></property>
+        <property name="breakAfterAcquireFailure" value="false"></property>
+    </bean>
+    <util:map id="slaveDBList">
+        <entry key="0" value-ref="slaveDataSource"/>
+    </util:map>
+    <bean id="dataSourceLookup" class="org.springframework.jdbc.datasource.lookup.MapDataSourceLookup">
+        <constructor-arg>
+            <ref bean="slaveDBList"/>
+        </constructor-arg>
+    </bean>
+    <bean id="slaveDataSourcePool" class="com.likou.core.db.SlaveDBDataSource">
+        <property name="defaultTargetDataSource" ref="slaveDataSource"/>
+        <property name="targetDataSources" ref="slaveDBList"/>
+        <property name="dataSourceLookup" ref="dataSourceLookup"/>
+    </bean>
+
+    <bean id="slaveSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="slaveDataSourcePool"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:mappers/slave/TestMapper.xml</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
+        <property name="basePackage" value="com.likou.passport.dao.slave"/>
+        <property name="sqlSessionFactory" ref="slaveSqlSessionFactory"/>
+    </bean>
+</beans>

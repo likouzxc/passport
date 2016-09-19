@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.likou.passport.web"/>
+
+    <mvc:annotation-driven/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login*.html"/>
+            <mvc:exclude-mapping path="/captcha/**"/>
+            <mvc:exclude-mapping path="*.js"/>
+            <mvc:exclude-mapping path="*.css"/>
+            <mvc:exclude-mapping path="*.jpg"/>
+            <bean class="com.likou.core.interceptors.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!-- velocity模板配置 -->
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="WEB-INF/views/"/>
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">UTF-8</prop>
+                <!-- 指定模板引擎进行模板处理的编码 -->
+                <prop key="output.encoding">UTF-8</prop>
+                <!-- 指定输出流的编码 -->
+                <prop key="contentType">text/html;charset=UTF-8</prop>
+                <!-- contentType -->
+            </props>
+        </property>
+    </bean>
+    <bean id="viewResolver"  class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".vm"/>
+        <property name="toolboxConfigLocation" value="WEB-INF/toolsbox.xml"/>
+        <property name="layoutUrl" value="/layout/layout.vm" />
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <property name="exposeRequestAttributes" value="true" /><!--是否开放request属性-->
+        <property name="requestContextAttribute" value="rc" /><!--request属性引用名称-->
+    </bean>
+    <bean id="global" class="com.likou.core.web.Contents">
+        <property name="host" value="${web.host}"/>
+        <property name="resourceHost" value="${web.resourceHost}"/>
+        <property name="cookieHost" value="${web.cookieHost}"/>
+        <property name="loginURL" value="${web.loginURL}"/>
+        <property name="requestFrom" value="${web.requestFrom}"/>
+    </bean>
+</beans>
