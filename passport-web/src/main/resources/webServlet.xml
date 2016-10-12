@@ -16,6 +16,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/login*.html"/>
+            <mvc:exclude-mapping path="/reg*.html"/>
             <mvc:exclude-mapping path="/captcha/**"/>
             <mvc:exclude-mapping path="*.js"/>
             <mvc:exclude-mapping path="*.css"/>

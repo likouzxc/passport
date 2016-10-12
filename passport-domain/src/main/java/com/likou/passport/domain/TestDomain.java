@@ -34,6 +34,6 @@ public class TestDomain {
         int count = testRepository.addOne(pojo);
         System.err.println(count);
         if(i%5==0)throw new DubboException("d");
-        System.err.println("TestDomain---saveTestData");
+        System.err.println("UserDomain---saveTestData");
     }
 }

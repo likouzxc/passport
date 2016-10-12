@@ -20,6 +20,7 @@
 	</util:list>
 	<util:list id="providerList" list-class="java.util.ArrayList">
 		<value type="java.lang.String" >com.likou.passport.service.expose.UserExpose</value>
+		<value type="java.lang.String" >com.likou.passport.service.expose.captcha.CaptchaExpose</value>
 	</util:list>
 	<util:map id="serviceMap" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
 		<entry key="com.likou.core.dubbo.UserProvider" value="1.0"/>

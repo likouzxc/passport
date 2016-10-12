@@ -30,7 +30,14 @@
                     ${errorMsg}
                 </div>
             #end
-            <form method="post" action="http://${global.host}/login.html" class="bootstrap-admin-login-form form-horizontal" style="background-color: rgba(0,0,0,.075);">
+            #if(${okMsg})
+                <div class="alert alert-success">
+                    <a class="close" data-dismiss="alert" href="#">&times;</a>
+                    <strong>OK!</strong>
+                    注册成功!
+                </div>
+            #end
+            <form method="post" action="http://${global.host}/loginAction.html" class="bootstrap-admin-login-form form-horizontal" style="background-color: rgba(0,0,0,.075);">
                 <h1 style="color: #ffda00;">Login</h1>
                 <div class="form-group">
                     <label class="col-lg-3 control-label" for="userName" style="color:#ffffff;">登录名:</label>
@@ -50,10 +57,17 @@
                         <input class="form-control" type="text" id="captcha" name="captcha">
                     </div>
                     <div class="col-lg-4">
-                        <a href="javascript:reImg()"><img width="90"  height="36" id="code" src="http://${global.host}/captcha/loginPNG.html"/></a>
+                        <a href="javascript:COMMON.reImg()"><img width="90"  height="36" id="code" src="http://${global.host}/captcha/loginPNG.html"/></a>
                     </div>
                 </div>
-                <button class="btn btn-lg btn-primary" type="submit" style="margin: 0px 4%;width: 295px;">登录</button>
+                <div class="form_group" style="height: 35px;">
+                    <div class="col-lg-6">
+                        <button class="btn btn-lg btn-primary" type="button" onclick="toReg()" style="margin: 0px 4%;width: 125px;">注册</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <button class="btn btn-lg btn-primary" type="submit" style="margin: 0px 4%;width: 125px;">登录</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -61,6 +75,7 @@
 
 <script type="text/javascript" src="http://${global.resourceHost}/js/jquery-2.2.4.min.js"></script>
 <script type="text/javascript" src="http://${global.resourceHost}/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://${global.resourceHost}/js/common.js"></script>
 <script type="text/javascript">
     $(function() {
         $('input[name="userName"]').focus();
@@ -74,8 +89,8 @@
 
         $('.alert').width(formWidth - 2 * alertPadding);
     });
-    function reImg(){
-        $("img").attr("src","http://${global.host}/captcha/loginPNG.html?t="+new Date().getTime());
+    function toReg() {
+        window.location = "http://${global.host}/reg.html";
     }
 </script>
 </body>

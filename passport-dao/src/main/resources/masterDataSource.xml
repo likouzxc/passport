@@ -42,6 +42,7 @@
         <property name="mapperLocations">
             <list>
                 <value>classpath*:mappers/master/TestMapper.xml</value>
+                <value>classpath*:mappers/master/UserMapper.xml</value>
             </list>
         </property>
     </bean>
