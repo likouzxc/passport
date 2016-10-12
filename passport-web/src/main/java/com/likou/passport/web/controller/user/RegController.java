@@ -91,37 +91,6 @@ public class RegController extends AbstractController {
                 return regToPage(model,userBean,errorMsg);
             }
         }
-
-//
-//
-//
-//
-//
-//
-//        if(StringUtils.isNotBlank(captchaService.getCode(sessionID))
-//                &&!captchaService.getCode(sessionID).equals(captcha)){
-//            errorMsg = "验证码错误!";
-//        }else if(StringUtils.isNotBlank(userName)
-//                &&StringUtils.isNotBlank(password)){
-//            int type = userService.getTypeForLogin(userName);
-//            if(type < 0){
-//                errorMsg = "登录名格式错误!";
-//            }else{
-//                UserResult userResult = userService.login(userName , password);
-//                if(userResult != null){
-//                    try {
-//                        CookieUtils.addCookieForLogin(getResponse(), Contents.getCookieHost());
-//                        CookieUtils.addCookie(getResponse(), Contents.getCookieHost(),"/",Contents.UUID,userResult.getId());
-//                        getResponse().sendRedirect("http://passport.mydning.com:8000/index.html");
-//                        return null;
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                        errorMsg = "网络异常!";
-//                    }
-//                }
-//            }
-//        }
-
     }
 
 
