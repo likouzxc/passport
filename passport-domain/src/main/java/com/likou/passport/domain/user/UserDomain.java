@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 /**
  * Created by jiangli on 16/6/29.
  */
@@ -61,7 +63,7 @@ public class UserDomain {
     @Transactional(rollbackFor = Exception.class)
     public boolean regUser() throws Exception {
         UserBean bean = new UserBean();
-        bean.setCreateTime(this.createTime);
+        bean.setCreateTime(new Date().getTime()/1000);
         bean.setEmail(this.email);
         bean.setFlag(this.flag);
         bean.setId(IDGen.get32ID());

@@ -11,6 +11,8 @@ import redis.clients.jedis.ShardedJedisPool;
 @Component
 public class CaptchaCache {
 
+    private final String LOGIN = "captcha_";
+
     @Autowired
     ShardedJedisPool shardedJedisPool;
 
@@ -19,7 +21,7 @@ public class CaptchaCache {
         try {
             shardedJedis = shardedJedisPool.getResource();
 
-            shardedJedis.set(sessionID,code);
+            shardedJedis.set(LOGIN+sessionID,code);
             shardedJedis.expire(sessionID,60);
 
         } catch (Exception ex) {
@@ -33,7 +35,10 @@ public class CaptchaCache {
         try {
             shardedJedis = shardedJedisPool.getResource();
 
-            return shardedJedis.get(sessionID);
+            String code = shardedJedis.get(LOGIN+sessionID);
+            shardedJedis.del(LOGIN+sessionID);
+
+            return code;
 
         } catch (Exception ex) {
             shardedJedisPool.returnBrokenResource(shardedJedis);

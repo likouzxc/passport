@@ -1,1 +1,3 @@
 hello,${param},33
+
+<a href="http://${global.host}/logout.html"> 登出</a>

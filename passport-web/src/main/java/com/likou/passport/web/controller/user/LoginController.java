@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.Cookie;
 import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * Created by jiangli on 16/9/18.
@@ -63,7 +65,7 @@ public class LoginController  extends AbstractController {
         String sessionID = CookieUtils.getCookieByName(this.getRequest(),Contents.SESSIONID);
 
         if(StringUtils.isNotBlank(captchaService.getCode(sessionID))
-                &&!captchaService.getCode(sessionID).equals(captcha)){
+                &&!captchaService.getCode(sessionID).equalsIgnoreCase(captcha)){
             errorMsg = "验证码错误!";
         }else if(StringUtils.isNotBlank(userName)
                 &&StringUtils.isNotBlank(password)){
@@ -74,8 +76,7 @@ public class LoginController  extends AbstractController {
                 UserResult userResult = userService.login(userName , password);
                 if(userResult != null){
                     try {
-                        userService.addCookieForLogin(getResponse(), Contents.getCookieHost());
-                        CookieUtils.addCookie(getResponse(), Contents.getCookieHost(),"/",Contents.UUID,userResult.getId());
+                        userService.addCookieForLogin(getResponse(), Contents.getCookieHost() , userResult.getId());
                         getResponse().sendRedirect("http://passport.mydning.com:8000/index.html");
                         return null;
                     } catch (IOException e) {
@@ -89,6 +90,23 @@ public class LoginController  extends AbstractController {
         model.addAttribute("errorMsg",errorMsg);
 
         return "redirect:/login.html";
+
+    }
+
+    @RequestMapping(value = "logout" , method = RequestMethod.GET)
+    @ParamAnnotation(values = {"model"})
+    public void logout(Model model){
+        String sessionID = CookieUtils.getCookieByName(this.getRequest(),Contents.SESSIONID);
+        String uuid = CookieUtils.getCookieByName(this.getRequest(),Contents.UUID);
+
+        try {
+            if(StringUtils.isNotBlank(sessionID) && StringUtils.isNotBlank(uuid)){
+                userService.logout(sessionID,uuid);
+            }
+            getResponse().sendRedirect(Contents.getLoginURL());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

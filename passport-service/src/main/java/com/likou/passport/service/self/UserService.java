@@ -5,6 +5,7 @@ import com.likou.common.net.CookieUtils;
 import com.likou.common.rule.RegEx;
 import com.likou.core.dubbo.AbstractService;
 import com.likou.core.web.Contents;
+import com.likou.passport.cache.UserCache;
 import com.likou.passport.domain.user.UserDomain;
 import com.likou.passport.domain.user.UserRepository;
 import com.likou.passport.piping.param.user.UserParam;
@@ -31,6 +32,8 @@ public class UserService extends AbstractService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserCache userCache;
 
     private BeanCopier userDomain2UserResult = BeanCopier.create(UserDomain.class,UserResult.class,false);
     private BeanCopier userParam2UserDomain = BeanCopier.create(UserParam.class,UserDomain.class,false);
@@ -46,9 +49,10 @@ public class UserService extends AbstractService {
      */
     public boolean isLogin(String sessionID ,String t ,String i ,String uuid) throws Exception{
 
-        if(StringUtils.isNotBlank(t) && StringUtils.isNotBlank(sessionID)  && StringUtils.isNotBlank(i)){
-            if(t.equals(getT(sessionID,Integer.parseInt(i)))) {
-
+        if(StringUtils.isNotBlank(t) && StringUtils.isNotBlank(sessionID)
+                && StringUtils.isNotBlank(i) && StringUtils.isNotBlank(uuid)){
+            if(userCache.isLogin(sessionID,uuid) && t.equals(getT(sessionID,Integer.parseInt(i)))){
+                userCache.login(sessionID,uuid);
                 return true;
             }
         }
@@ -72,6 +76,9 @@ public class UserService extends AbstractService {
             userDomain2UserResult.copy(userDomain,result,null);
             return result;
         }
+    }
+    public void logout(String sessionID,String uuid){
+        userCache.logout(sessionID,uuid);
     }
 
     /**
@@ -126,7 +133,7 @@ public class UserService extends AbstractService {
      * @param response
      * @param domain
      */
-    public void addCookieForLogin(HttpServletResponse response, String domain){
+    public void addCookieForLogin(HttpServletResponse response, String domain , String uuid){
         int index = random.nextInt(32);
         String sessionID = DigestUtils.md5Hex(IDGen.get32ID());
         String t = getT(sessionID,index);
@@ -135,12 +142,15 @@ public class UserService extends AbstractService {
         CookieUtils.addCookie(response,domain,"/",Contents.I,i);
         CookieUtils.addCookie(response,domain,"/",Contents.T,t);
         CookieUtils.addCookie(response,domain,"/",Contents.SESSIONID,sessionID);
-    }
+        CookieUtils.addCookie(response,domain,"/",Contents.UUID,uuid);
 
+        userCache.login(sessionID,uuid);
+    }
     private String getT(String sessionID,int index){
         StringBuffer sb = new StringBuffer(sessionID);
         sb.insert(index,MD5);
         String t = DigestUtils.md5Hex(sb.toString());
         return t;
     }
+
 }

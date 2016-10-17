@@ -31,9 +31,9 @@ public class TestDomain {
         pojo.setPhone("18600933902");
         pojo.setCreateTime(12123l);
 
-        int count = testRepository.addOne(pojo);
-        System.err.println(count);
-        if(i%5==0)throw new DubboException("d");
+//        int count = testRepository.addOne(pojo);
+//        System.err.println(count);
+//        if(i%5==0)throw new DubboException("d");
         System.err.println("UserDomain---saveTestData");
     }
 }
