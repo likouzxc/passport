@@ -3,6 +3,7 @@ package com.likou.passport.service.self;
 import com.likou.common.character.IDGen;
 import com.likou.common.net.CookieUtils;
 import com.likou.common.rule.RegEx;
+import com.likou.core.bean.LoginCookieBean;
 import com.likou.core.dubbo.AbstractService;
 import com.likou.core.web.Contents;
 import com.likou.passport.cache.UserCache;
@@ -40,19 +41,16 @@ public class UserService extends AbstractService {
 
     /**
      * 判断是否登录
-     * @param sessionID
-     * @param t
-     * @param i
-     * @param uuid
      * @return
      * @throws Exception
      */
-    public boolean isLogin(String sessionID ,String t ,String i ,String uuid) throws Exception{
+    public boolean isLogin(LoginCookieBean bean) throws Exception{
 
-        if(StringUtils.isNotBlank(t) && StringUtils.isNotBlank(sessionID)
-                && StringUtils.isNotBlank(i) && StringUtils.isNotBlank(uuid)){
-            if(userCache.isLogin(sessionID,uuid) && t.equals(getT(sessionID,Integer.parseInt(i)))){
-                userCache.login(sessionID,uuid);
+        if(StringUtils.isNotBlank(bean.getT()) && StringUtils.isNotBlank(bean.getSessionID())
+                && StringUtils.isNotBlank(bean.getI()) && StringUtils.isNotBlank(bean.getUuid())){
+            if(userCache.isLogin(bean.getSessionID(),bean.getUuid())
+                    && bean.getT().equals(getT(bean.getSessionID(),Integer.parseInt(bean.getI())))){
+                userCache.login(bean.getSessionID(),bean.getUuid());
                 return true;
             }
         }

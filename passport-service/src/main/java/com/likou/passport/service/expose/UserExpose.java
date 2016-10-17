@@ -1,6 +1,7 @@
 package com.likou.passport.service.expose;
 
 import com.likou.common.net.CookieUtils;
+import com.likou.core.bean.LoginCookieBean;
 import com.likou.core.dubbo.CallParam;
 import com.likou.core.dubbo.CallResult;
 import com.likou.core.dubbo.UserProvider;
@@ -25,12 +26,8 @@ public class UserExpose implements UserProvider {
     @Override
     public CallResult isLogin(CallParam param) throws Exception {
 
-        String t = (String) param.getValue(Contents.T);
-        String i = (String) param.getValue(Contents.I);
-        String sessionID = (String) param.getValue(Contents.SESSIONID);
-        String uuid = (String) param.getValue(Contents.UUID);
-
-        boolean flag =userService.isLogin(sessionID,t,i,uuid);
+        LoginCookieBean cookieBean = param.getValue("cookieBean", LoginCookieBean.class);
+        boolean flag =userService.isLogin(cookieBean);
 
         if(flag) {
             return CallResult.SUCCESS();

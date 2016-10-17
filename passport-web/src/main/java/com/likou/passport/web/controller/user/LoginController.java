@@ -2,12 +2,14 @@ package com.likou.passport.web.controller.user;
 
 import com.likou.common.net.CookieUtils;
 import com.likou.core.annotation.ParamAnnotation;
+import com.likou.core.bean.LoginCookieBean;
 import com.likou.core.web.AbstractController;
 import com.likou.core.web.Contents;
 import com.likou.passport.piping.result.user.UserResult;
 import com.likou.passport.service.self.CaptchaService;
 import com.likou.passport.service.self.UserService;
 import org.apache.commons.lang.StringUtils;
+import org.apache.zookeeper.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,8 +41,19 @@ public class LoginController  extends AbstractController {
      * @return
      */
     @RequestMapping(value = "login" , method = RequestMethod.GET)
-    @ParamAnnotation(values = {"model","userName","errorMsg","okMsg"})
-    public String loginToPage(Model model , String userName , String errorMsg , String okMsg){
+    @ParamAnnotation(values = {"model","userName","errorMsg","okMsg","url"})
+    public String loginToPage(Model model , String userName , String errorMsg , String okMsg , String url){
+        LoginCookieBean cookieBean = new LoginCookieBean(this.getRequest());
+        try {
+            if(userService.isLogin(cookieBean)){
+                if(url == null){
+                    getResponse().sendRedirect("http://"+Contents.getHost()+"/index.html");
+                    return null;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         model.addAttribute("userName",userName);
         model.addAttribute("errorMsg",errorMsg);
@@ -64,8 +77,9 @@ public class LoginController  extends AbstractController {
         String errorMsg = "登录名不存在或用户名密码错误!";
         String sessionID = CookieUtils.getCookieByName(this.getRequest(),Contents.SESSIONID);
 
-        if(StringUtils.isNotBlank(captchaService.getCode(sessionID))
-                &&!captchaService.getCode(sessionID).equalsIgnoreCase(captcha)){
+        if(StringUtils.isBlank(sessionID)
+                || StringUtils.isBlank(captchaService.getCode(sessionID))
+                || !captchaService.getCode(sessionID).equalsIgnoreCase(captcha)){
             errorMsg = "验证码错误!";
         }else if(StringUtils.isNotBlank(userName)
                 &&StringUtils.isNotBlank(password)){
@@ -77,7 +91,7 @@ public class LoginController  extends AbstractController {
                 if(userResult != null){
                     try {
                         userService.addCookieForLogin(getResponse(), Contents.getCookieHost() , userResult.getId());
-                        getResponse().sendRedirect("http://passport.mydning.com:8000/index.html");
+                        getResponse().sendRedirect("http://"+Contents.getHost()+"/index.html");
                         return null;
                     } catch (IOException e) {
                         e.printStackTrace();
