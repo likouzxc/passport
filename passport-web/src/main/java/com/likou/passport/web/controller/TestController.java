@@ -31,4 +31,20 @@ public class TestController extends AbstractController {
 
         return "hello";
     }
+
+    @RequestMapping(value = "indexss" , method = RequestMethod.GET)
+    @ParamAnnotation(values = {"model","param"})
+    public String hellsso(Model model,String param) throws Exception{
+
+        try {
+            testService.saveTestData("1", "2");
+
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+        model.addAttribute("param",param);
+
+        return "hello";
+    }
 }

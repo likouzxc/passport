@@ -41,13 +41,16 @@ public class LoginController  extends AbstractController {
      * @return
      */
     @RequestMapping(value = "login" , method = RequestMethod.GET)
-    @ParamAnnotation(values = {"model","userName","errorMsg","okMsg","url"})
-    public String loginToPage(Model model , String userName , String errorMsg , String okMsg , String url){
+    @ParamAnnotation(values = {"model","userName","errorMsg","okMsg","redirectURL"})
+    public String loginToPage(Model model , String userName , String errorMsg , String okMsg , String redirectURL){
         LoginCookieBean cookieBean = new LoginCookieBean(this.getRequest());
         try {
             if(userService.isLogin(cookieBean)){
-                if(url == null){
+                if(StringUtils.isBlank(redirectURL)){
                     getResponse().sendRedirect("http://"+Contents.getHost()+"/index.html");
+                    return null;
+                }else{
+                    getResponse().sendRedirect(redirectURL);
                     return null;
                 }
             }
@@ -58,6 +61,7 @@ public class LoginController  extends AbstractController {
         model.addAttribute("userName",userName);
         model.addAttribute("errorMsg",errorMsg);
         model.addAttribute("okMsg",okMsg);
+        model.addAttribute("redirectURL",redirectURL);
 
         return "login";
 
@@ -71,8 +75,8 @@ public class LoginController  extends AbstractController {
      * @return
      */
     @RequestMapping(value = "loginAction" , method = RequestMethod.POST)
-    @ParamAnnotation(values = {"model","userName","password","captcha","url"})
-    public String login(Model model , String userName , String password ,String captcha , String url){
+    @ParamAnnotation(values = {"model","userName","password","captcha","redirectURL"})
+    public String login(Model model , String userName , String password ,String captcha , String redirectURL){
 
         String errorMsg = "登录名不存在或用户名密码错误!";
         String sessionID = CookieUtils.getCookieByName(this.getRequest(),Contents.SESSIONID);
@@ -91,7 +95,11 @@ public class LoginController  extends AbstractController {
                 if(userResult != null){
                     try {
                         userService.addCookieForLogin(getResponse(), Contents.getCookieHost() , userResult.getId());
-                        getResponse().sendRedirect("http://"+Contents.getHost()+"/index.html");
+                        if(StringUtils.isBlank(redirectURL)){
+                            getResponse().sendRedirect("http://"+Contents.getHost()+"/index.html");
+                        }else{
+                            getResponse().sendRedirect(redirectURL);
+                        }
                         return null;
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -102,6 +110,7 @@ public class LoginController  extends AbstractController {
         }
         model.addAttribute("userName",userName);
         model.addAttribute("errorMsg",errorMsg);
+        model.addAttribute("redirectURL",redirectURL);
 
         return "redirect:/login.html";
 
@@ -121,6 +130,5 @@ public class LoginController  extends AbstractController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
