@@ -1,4 +1,4 @@
-package com.likou.passport.web.controller;
+package com.likou.passport.web.controller.index;
 
 import com.likou.core.annotation.ParamAnnotation;
 import com.likou.core.web.AbstractController;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = "/test")
-public class TestController extends AbstractController {
+@RequestMapping(value = "/")
+public class IndexController extends AbstractController {
 
     @Autowired
     TestService testService;
@@ -32,19 +32,4 @@ public class TestController extends AbstractController {
         return "hello";
     }
 
-    @RequestMapping(value = "indexss" , method = RequestMethod.GET)
-    @ParamAnnotation(values = {"model","param"})
-    public String hellsso(Model model,String param) throws Exception{
-
-        try {
-            testService.saveTestData("1", "2");
-
-        }catch (Exception e){
-            e.printStackTrace();
-            throw e;
-        }
-        model.addAttribute("param",param);
-
-        return "hello";
-    }
 }

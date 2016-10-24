@@ -1,3 +1,5 @@
 <!--START-GLOBAL-JS-->
-
+<script type="text/javascript" src="http://${global.resourceHost}/js/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="http://${global.resourceHost}/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://${global.resourceHost}/js/twitter-bootstrap-hover-dropdown.min.js"></script>
 <!--END-GLOBAL-JS-->

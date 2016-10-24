@@ -1,3 +1,12 @@
 <!--START-GLOBAL-CSS-->
+<!-- Bootstrap -->
+<link rel="stylesheet" media="screen" href="http://${global.resourceHost}/css/bootstrap.min.css">
+<link rel="stylesheet" media="screen" href="http://${global.resourceHost}/css/bootstrap-theme.min.css">
+<link rel="stylesheet" media="screen" href="http://${global.resourceHost}/css/bootstrap-admin-theme.css">
 
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script type="text/javascript" src="http://${global.resourceHost}/js/html5shiv.js"></script>
+<script type="text/javascript" src="http://${global.resourceHost}/js/respond.min.js"></script>
+<![endif]-->
 <!--END-GLOBAL-CSS-->

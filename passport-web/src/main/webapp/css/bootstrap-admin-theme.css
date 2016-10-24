@@ -39,11 +39,6 @@ body.bootstrap-admin-with-small-navbar{
     padding-top: 95px;
 }
 
-/** Main container **/
-#content {
-    margin-left: 0px;
-}
-
 /** Forms */
 .form-group label.control-label{
     line-height: normal;
@@ -387,11 +382,21 @@ table > tbody > tr > td.actions .btn{
     padding-top: 10px;
 }
 
+/** Main container **/
+.content {
+    margin-left: 0px;
+}
+
+
 /** Footer **/
 .navbar-footer{
     background-color: #F8F8F8;
-    margin-top: 15px;
+    bottom: 15px;
+    position: fixed;
+    margin: 0 auto;
+    width: 100%;
 }
+
 .navbar-footer footer p{
     margin-bottom: 15px;
     margin-top: 15px;
@@ -410,7 +415,7 @@ table > tbody > tr > td.actions .btn{
 
 /** Login form **/
 .bootstrap-admin-login-form{
-    max-width: 400px;
+    max-width: 539px;
     padding: 30px;
     margin: 0 auto;
     background-color: #FFF;

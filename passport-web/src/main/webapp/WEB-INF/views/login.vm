@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="bootstrap-admin-vertical-centered">
 <head>
-    <title>Login</title>
+    <title>SSO单点登录系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" media="screen" href="http://${global.resourceHost}/css/bootstrap.min.css">
@@ -38,7 +38,7 @@
                 </div>
             #end
             <form method="post" action="http://${global.host}/loginAction.html" class="bootstrap-admin-login-form form-horizontal" style="background-color: rgba(0,0,0,.075);">
-                <h1 style="color: #ffda00;">Login</h1>
+                <h1 style="color: #ffda00;">SSO单点登录</h1>
                 <div class="form-group">
                     <label class="col-lg-3 control-label" for="userName" style="color:#ffffff;">登录名:</label>
                     <div class="col-lg-8">
@@ -63,10 +63,8 @@
                 </div>
                 <div class="form_group" style="height: 35px;">
                     <div class="col-lg-6">
-                        <button class="btn btn-lg btn-primary" type="button" onclick="toReg()" style="margin: 0px 4%;width: 125px;">注册</button>
-                    </div>
-                    <div class="col-lg-6">
-                        <button class="btn btn-lg btn-primary" type="submit" style="margin: 0px 4%;width: 125px;">登录</button>
+                        <button class="btn btn-lg btn-primary" type="button" onclick="toReg()" >注册</button>
+                        <button class="btn btn-lg btn-primary right" type="submit">登录</button>
                     </div>
                 </div>
             </form>
