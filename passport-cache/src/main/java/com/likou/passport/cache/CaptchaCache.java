@@ -36,7 +36,7 @@ public class CaptchaCache {
             shardedJedis = shardedJedisPool.getResource();
 
             String code = shardedJedis.get(CAPTCHA +sessionID);
-//            shardedJedis.del(CAPTCHA +sessionID);
+            shardedJedis.del(CAPTCHA +sessionID);
 
             return code;
 

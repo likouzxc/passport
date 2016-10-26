@@ -80,10 +80,10 @@ public class LoginController  extends AbstractController {
 
         String errorMsg = "登录名不存在或用户名密码错误!";
         String sessionID = CookieUtils.getCookieByName(this.getRequest(),Contents.SESSIONID);
-
+        String cacheCaptcha = captchaService.getCode(sessionID);
         if(StringUtils.isBlank(sessionID)
-                || StringUtils.isBlank(captchaService.getCode(sessionID))
-                || !captchaService.getCode(sessionID).equalsIgnoreCase(captcha)){
+                || StringUtils.isBlank(cacheCaptcha)
+                || !cacheCaptcha.equalsIgnoreCase(captcha)){
             errorMsg = "验证码错误!";
         }else if(StringUtils.isNotBlank(userName)
                 &&StringUtils.isNotBlank(password)){
