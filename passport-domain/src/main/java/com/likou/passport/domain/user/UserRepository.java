@@ -37,7 +37,7 @@ public class UserRepository {
         return new UserDomain(this,type,value);
     }
 
-    protected  int regUser(UserBean bean){
+    int regUser(UserBean bean){
         return userMasterDAO.regUser(bean);
     }
     protected UserBean initUserByID(String id){

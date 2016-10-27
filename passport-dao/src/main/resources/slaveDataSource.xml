@@ -43,6 +43,7 @@
             <list>
                 <value>classpath*:mappers/slave/TestMapper.xml</value>
                 <value>classpath*:mappers/slave/UserMapper.xml</value>
+                <value>classpath*:mappers/slave/ProjectConfigMapper.xml</value>
             </list>
         </property>
     </bean>

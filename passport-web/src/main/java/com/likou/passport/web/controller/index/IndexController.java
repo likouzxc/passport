@@ -18,7 +18,7 @@ public class IndexController extends AbstractController {
 
     @RequestMapping(value = "index" , method = RequestMethod.GET)
     @ParamAnnotation(values = {"model","param"})
-    public String hello(Model model,String param) throws Exception{
+    public String index(Model model,String param) throws Exception{
 
         try {
             testService.saveTestData("1", "2");
@@ -29,7 +29,7 @@ public class IndexController extends AbstractController {
         }
         model.addAttribute("param",param);
 
-        return "hello";
+        return "index";
     }
 
 }

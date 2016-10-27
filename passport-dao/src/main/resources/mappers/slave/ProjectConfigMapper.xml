@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.likou.passport.dao.slave.system.ProjectConfigSlaveDAO">
+
+    <sql id="paramSQL">
+        `id`,`name`,`domain`,`create_time`,`status`,`description`
+    </sql>
+
+
+
+    <resultMap id="resultMap" type="com.likou.passport.bean.system.ProjectConfigBean">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="domain" property="domain"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="description" property="description"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,33 @@
+<div class="page-header">
+    <h2>单点管理</h2>
+</div>
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="text-muted bootstrap-admin-box-title">单点系统接入管理</div>
+        </div>
+        <div class="bootstrap-admin-panel-content">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="text-center">序号</th>
+                    <th class="text-center">项目名称</th>
+                    <th class="text-center">项目domain</th>
+                    <th class="text-center">状态</th>
+                    <th class="text-center">接入时间</th>
+                    <th class="text-center">项目描述</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

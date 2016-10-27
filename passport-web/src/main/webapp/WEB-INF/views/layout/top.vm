@@ -38,7 +38,7 @@
                             <a href="#" class="dropdown-toggle" data-hover="dropdown">设置 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li role="presentation" class="dropdown-header">单点系统管理</li>
-                                <li><a href="#">系统管理</a></li>
+                                <li><a href="http://${global.host}/manage/list.html">系统管理</a></li>
                                 <li><a href="#">系统接入</a></li>
                             </ul>
                         </li>

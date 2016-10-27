@@ -16,20 +16,20 @@ public class UserDomain {
 
     private UserRepository userRepository;
 
-    public UserDomain(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     BeanCopier bean2domain = BeanCopier.create(UserBean.class,UserDomain.class,false);
 
     private final String passwordMD5 = "lijiang";
+
+    UserDomain(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /**
      * 通过id初始化domain
      * @param userRepository
      * @param id
      */
-    public UserDomain(UserRepository userRepository , String id){
+    UserDomain(UserRepository userRepository , String id){
         this(userRepository);
         initUserByID();
     }
@@ -40,7 +40,7 @@ public class UserDomain {
      * @param type 登录类型,0:使用email初始化,1:使用用户名初始化,2:使用手机号初始化,其他使用id初始化
      * @param value 数值
      */
-    public UserDomain(UserRepository userRepository , int type , String value){
+    UserDomain(UserRepository userRepository , int type , String value){
         this(userRepository);
         switch (type){
             case 0 :{
